@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="OAB_NEW">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="archive" name="OAB_NEW.jar">
+      <element id="module-output" name="OAB-NOVO" />
+    </root>
+  </artifact>
+</component>

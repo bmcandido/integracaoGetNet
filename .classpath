@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/gson-2.1.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/ibge.JAR"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/jape-4.10b157.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/jasperreports-4.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/javax.ejb-api-3.2.2.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/jaxen-jdom.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/jdom.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/jdom-jaxen-jboss-4.10b157.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mgefin-model-4.10b157.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mge-modelcore-4.10b157.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mge-modulemgr-4.10b157.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/sankhya-commons-4.10b157.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/SankhyaW-extensions.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/sanutil-4.10b157.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/sanws-4.10b157.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/servlet.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/servlet-api.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/skw-environment.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/stream-api-0.9.7-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/barbecue-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/barcode4j-2.0.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/cuckoo.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/dwf-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/dwr.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/jape-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/javax.ejb-1.6.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/jaxen-core.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/JBarcodeBean-1.1.5.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/jboleto-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/jdom-jaxen-jboss-4.12b307.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/joda-time-2.3.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/json-20140107.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mgearmazem-model-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mgecom-model-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mgefin-model-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mge-modelcore-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mgewms-model-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/pdfbox.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/poi-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/poi-ooxml-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/poi-ooxml-schemas-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/sancrypt-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/sankhya-commons-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/sankhya-graphql.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/sanutil-4.12b307.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/sanutil-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/sanws-4.12b307.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/sanws-4.16b97.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/slf4j-api-1.7.7.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/timimob-model-4.16b97.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

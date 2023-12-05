@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/commons-codec-1.3.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/gson-2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/ibge.JAR!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/jape-4.10b157.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/jasperreports-4.0.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/javax.ejb-api-3.2.2.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/jaxen-jdom.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/jdom.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/jdom-jaxen-jboss-4.10b157.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/mgefin-model-4.10b157.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/mge-modelcore-4.10b157.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/mge-modulemgr-4.10b157.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/sankhya-commons-4.10b157.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/SankhyaW-extensions.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanutil-4.10b157.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanws-4.10b157.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/servlet.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/servlet-api.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/skw-environment.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/stream-api-0.9.7-sources.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/barbecue-1.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/barcode4j-2.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/commons-lang-2.4.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/cuckoo.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/dom4j-1.6.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/dwf-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/dwr.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/jape-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/javax.ejb-1.6.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/jaxen-core.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/JBarcodeBean-1.1.5.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/jboleto-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/jdom-jaxen-jboss-4.12b307.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/joda-time-2.3.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/json-20140107.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/mgearmazem-model-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/mgecom-model-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/mgefin-model-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/mge-modelcore-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/mgewms-model-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/pdfbox.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/poi-3.9-20121203.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/poi-ooxml-3.9-20121203.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/poi-ooxml-schemas-3.9-20121203.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/sancrypt-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/sankhya-commons-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/sankhya-graphql.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanutil-4.12b307.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanutil-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanws-4.12b307.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanws-4.16b97.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/slf4j-api-1.7.7.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../../Biblioteca - SKW/timimob-model-4.16b97.jar!/" />
+    <src_description expected_position="1">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="1" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="JavaSE-1.7" jdkType="JavaSDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="commons-codec-1.3.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/commons-codec-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="gson-2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/gson-2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ibge.JAR">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/ibge.JAR!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jape-4.10b157.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/jape-4.10b157.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jasperreports-4.0.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/jasperreports-4.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="javax.ejb-api-3.2.2.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/javax.ejb-api-3.2.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jaxen-jdom.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/jaxen-jdom.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jdom.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/jdom.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jdom-jaxen-jboss-4.10b157.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/jdom-jaxen-jboss-4.10b157.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mgefin-model-4.10b157.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/mgefin-model-4.10b157.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mge-modelcore-4.10b157.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/mge-modelcore-4.10b157.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mge-modulemgr-4.10b157.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/mge-modulemgr-4.10b157.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sankhya-commons-4.10b157.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/sankhya-commons-4.10b157.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="SankhyaW-extensions.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/SankhyaW-extensions.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sanutil-4.10b157.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanutil-4.10b157.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sanws-4.10b157.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanws-4.10b157.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="servlet.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/servlet.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="servlet-api.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/servlet-api.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="skw-environment.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/skw-environment.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="stream-api-0.9.7-sources.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/stream-api-0.9.7-sources.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="barbecue-1.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/barbecue-1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="barcode4j-2.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/barcode4j-2.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-lang-2.4.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/commons-lang-2.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="cuckoo.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/cuckoo.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="dom4j-1.6.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/dom4j-1.6.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="dwf-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/dwf-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="dwr.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/dwr.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jape-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/jape-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="javax.ejb-1.6.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/javax.ejb-1.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jaxen-core.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/jaxen-core.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="JBarcodeBean-1.1.5.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/JBarcodeBean-1.1.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jboleto-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/jboleto-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jdom-jaxen-jboss-4.12b307.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/jdom-jaxen-jboss-4.12b307.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="joda-time-2.3.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/joda-time-2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="json-20140107.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/json-20140107.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mgearmazem-model-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/mgearmazem-model-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mgecom-model-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/mgecom-model-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mgefin-model-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/mgefin-model-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mge-modelcore-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/mge-modelcore-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mgewms-model-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/mgewms-model-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="pdfbox.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/pdfbox.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-3.9-20121203.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/poi-3.9-20121203.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-ooxml-3.9-20121203.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/poi-ooxml-3.9-20121203.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="poi-ooxml-schemas-3.9-20121203.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/poi-ooxml-schemas-3.9-20121203.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sancrypt-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/sancrypt-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sankhya-commons-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/sankhya-commons-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sankhya-graphql.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/sankhya-graphql.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sanutil-4.12b307.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanutil-4.12b307.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sanutil-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanutil-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sanws-4.12b307.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanws-4.12b307.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sanws-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/sanws-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="slf4j-api-1.7.7.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/slf4j-api-1.7.7.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="timimob-model-4.16b97.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Biblioteca - SKW/timimob-model-4.16b97.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
