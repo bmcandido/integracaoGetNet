@@ -1,5 +1,7 @@
 package br.com.oab.actions;
 
+import java.sql.Timestamp;
+
 import br.com.oab.controller.BuscaTokenController;
 import br.com.oab.controller.IntegracaoGetnet;
 import br.com.sankhya.extensions.actionbutton.AcaoRotinaJava;
@@ -9,25 +11,50 @@ import br.com.oab.model.ParametrosModel;
 
 public class BotaoConsultaLinksGetnet implements AcaoRotinaJava {
 
-    @Override
-    public void doAction(ContextoAcao contextoAcao) throws Exception {
+	@Override
+	public void doAction(ContextoAcao contexto) throws Exception {
 
-        //Consulta Parametros
-        ParametrosDAO parDao = new ParametrosDAO();
-        ParametrosModel parametros;
-        parametros = parDao.consultaParametros();
+		if (contexto.getParam("DTINI") != null && contexto.getParam("DTFIM") != null) {
 
-        // Busca novo Token
-        BuscaTokenController tokenController = new BuscaTokenController();
-        String token = tokenController.checkToken(parametros);
+			Timestamp dataInicio = (Timestamp) contexto.getParam("DTINI");
+			Timestamp dataFim = (Timestamp) contexto.getParam("DTFIM");
 
-        System.out.println("Token: " + token);
+			consultaLinks(dataInicio, dataFim);
 
-        IntegracaoGetnet integracaoGetnet = new IntegracaoGetnet();
-        integracaoGetnet.consultaLinksGetnet();
-        
-        contextoAcao.setMensagemRetorno("Links inseridos com sucesso!");
+			contexto.setMensagemRetorno("Registros Importados com sucesso!");
 
-    }
+		} else {
+
+			// Consulta Parametros
+			ParametrosDAO parDao = new ParametrosDAO();
+			ParametrosModel parametros;
+			parametros = parDao.consultaParametros();
+
+			// Busca novo Token
+			BuscaTokenController tokenController = new BuscaTokenController();
+			String token = tokenController.checkToken(parametros);
+
+			System.out.println("Token: " + token);
+
+			IntegracaoGetnet integracaoGetnet = new IntegracaoGetnet();
+			integracaoGetnet.consultaLinksGetnet();
+
+			contexto.setMensagemRetorno("Links inseridos com sucesso!");
+		}
+
+	}
+
+	void consultaLinks(Timestamp dataInicio, Timestamp dataFim) throws Exception {
+
+		IntegracaoGetnet integracaoGetnet = new IntegracaoGetnet();
+
+		// Consulta os Links por filtro
+
+		integracaoGetnet.consultaLinksporFiltroGetnet(dataInicio, dataFim);
+
+		// Consulta As Ordens
+		// integracaoGetnet.consultaOrdersGetnet();
+
+	}
 
 }

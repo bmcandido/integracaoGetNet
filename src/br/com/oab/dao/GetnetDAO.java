@@ -25,16 +25,15 @@ public class GetnetDAO {
 		List<LinkOrigModel> ListalinkOrig = new ArrayList<LinkOrigModel>();
 
 		final NativeSql nativeSql = new NativeSql(jdbcWrapper);
-		nativeSql.appendSql("SELECT ori.NURENEG, ori.LINKID, ori.link, ori.NUFIN\n" +
-				"FROM AD_GETNETPAYMENTLINK ori\n" +
-				"WHERE NOT EXISTS (\n" +
-				"    SELECT 1\n" +
-				"    FROM AD_GTNLINK L\n" +
-				"    WHERE L.LINKID = ori.LINKID\n" +
-				"    AND L.PAGSUCESSO > 0\n" +
-				")\n" +
-				"\n" +
-				"AND ori.DHCRIACAO BETWEEN DATEADD(DAY, -3, GETDATE()) AND GETDATE()");
+		nativeSql.appendSql("SELECT ori.NURENEG, ori.LINKID, ori.link, ori.NUFIN\r\n"
+				+ "FROM AD_GETNETPAYMENTLINK ori\r\n"
+				+ "WHERE NOT EXISTS (SELECT 1\r\n"
+				+ "                  FROM AD_GTNLINK L\r\n"
+				+ "                  WHERE L.LINKID = ori.LINKID\r\n"
+				+ "                   )\r\n"
+				+ "  AND ori.DHCRIACAO BETWEEN DATEADD(DAY, -3, GETDATE()) AND GETDATE()\r\n"
+				+ "\r\n"
+				+ "");
 
 		final ResultSet resultSet = nativeSql.executeQuery();
 		while (resultSet.next()) {

@@ -39,6 +39,10 @@ public class BaixaController {
 
 		try {
 
+			System.out.println("*******************************************************");
+			System.out.println("Entrou na rotina : buscaFinanceiroEBaixa()");
+			System.out.println("*******************************************************");
+
 			EntityFacade dwfEntityFacade = EntityFacadeFactory.getDWFFacade();
 			jdbc = dwfEntityFacade.getJdbcWrapper();
 			jdbc.openSession();
@@ -46,21 +50,18 @@ public class BaixaController {
 			final JdbcWrapper jdbcWrapper = dwfEntityFacade.getJdbcWrapper();
 
 			for (LinkBaixaModel registro : retornaRenegociacoes()) {
-				
-		
 
 				FinderWrapper findTitABaixar;
-				
+
 				if (registro.getNureneg() != null) {
-				    findTitABaixar = new FinderWrapper("Financeiro", "this.NURENEG = ? AND this.RECDESP = ?",
-				            new Object[] { registro.getNureneg(), BigDecimalUtil.valueOf(1) });
+					findTitABaixar = new FinderWrapper("Financeiro", "this.NURENEG = ? AND this.RECDESP = ?",
+							new Object[] { registro.getNureneg(), BigDecimalUtil.valueOf(1) });
 				} else {
-				    findTitABaixar = new FinderWrapper("Financeiro", "this.NUFIN = ? AND this.RECDESP = ?",
-				            new Object[] { registro.getNufin(), BigDecimalUtil.valueOf(1) });
+					findTitABaixar = new FinderWrapper("Financeiro", "this.NUFIN = ? AND this.RECDESP = ?",
+							new Object[] { registro.getNufin(), BigDecimalUtil.valueOf(1) });
 				}
 
 				Collection<DynamicVO> financeiros = dwfEntityFacade.findByDynamicFinderAsVO(findTitABaixar);
-
 
 				for (DynamicVO finVO : financeiros) {
 
@@ -96,12 +97,17 @@ public class BaixaController {
 							"* Vai entrar na query nativeSql =  Busca dados do TEF-Registro : " + registro.getIdLink());
 					System.out.println("*********************");
 
-					nativeSqlResultCartao.appendSql("SELECT TOP 1 \r\n" + "       D.TRN_BRAND       AS BANDEIRA,\r\n"
-							+ "       D.TRN_TERMINALNSU AS NUSU,\r\n" + "       D.TRN_ACQTRANSID  AS AUTORIZACAO,\r\n"
-							+ "       D.TRN_TRANSID     AS NUMDOC, \r\n" + "       D.PMT_VALOR     AS VALOR, \r\n"
-							+ "       D.TRN_DHRECEB  AS DATARECEBIMENTO \r\n" + " FROM AD_GTNPMTORD D\r\n"
+					nativeSqlResultCartao.appendSql("SELECT TOP 1 \r\n" 
+					        + "       D.TRN_BRAND       AS BANDEIRA,\r\n"
+							+ "       D.TRN_TERMINALNSU AS NUSU,\r\n" 
+					        + "       D.TRN_ACQTRANSID  AS AUTORIZACAO,\r\n"
+							+ "       D.TRN_TRANSID     AS NUMDOC, \r\n" 
+					        + "       D.PMT_VALOR     AS VALOR, \r\n"
+							+ "       D.TRN_DHRECEB  AS DATARECEBIMENTO \r\n" 
+					        + " FROM AD_GTNPMTORD D\r\n"
 							+ " WHERE D.LINKID = '" + registro.getIdLink() + "'  \r\n"
-							+ "  AND D.PMT_STATUS = 'SUCCESSFUL'\r\n" + "  AND D.TRN_STATUS = 'APPROVED'");
+							+ "  AND D.PMT_STATUS = 'SUCCESSFUL'\r\n" 
+							+ "  AND D.TRN_STATUS = 'APPROVED'");
 
 					final ResultSet resultSetCartao = nativeSqlResultCartao.executeQuery();
 
@@ -226,11 +232,16 @@ public class BaixaController {
 
 					final NativeSql nativeSql = new NativeSql(jdbcWrapper);
 
-					nativeSql.appendSql("select d.CODCTABCOINTDEB,\r\n" + "       C1.CODBCO    AS      CODBCOODEB,\r\n"
-							+ "       d.CODCTABCOINTCRED,\r\n" + "       C2.CODBCO    AS      CODBCOODEB \r\n"
-							+ "  From AD_GTNPAR d \r\n" + " INNER JOIN TSICTA C1 \r\n"
-							+ "    ON C1.CODCTABCOINT = D.CODCTABCOINTDEB \r\n" + " INNER JOIN TSICTA C2 \r\n"
-							+ "    ON C2.CODCTABCOINT = D.CODCTABCOINTCRED \r\n" + " where d.NUPAR = 1 \r\n" + "");
+					nativeSql.appendSql("select d.CODCTABCOINTDEB,\r\n"
+                            + "       C1.CODBCO    AS      CODBCOODEB,\r\n"
+							+ "       d.CODCTABCOINTCRED,\r\n" 
+                            + "       C2.CODBCO    AS      CODBCOODEB \r\n"
+							+ "  From AD_GTNPAR d \r\n" 
+                            + " INNER JOIN TSICTA C1 \r\n"
+							+ "    ON C1.CODCTABCOINT = D.CODCTABCOINTDEB \r\n" 
+                            + " INNER JOIN TSICTA C2 \r\n"
+							+ "    ON C2.CODCTABCOINT = D.CODCTABCOINTCRED \r\n" 
+                            + " where d.NUPAR = 1 \r\n" + "");
 
 					final ResultSet resultSet = nativeSql.executeQuery();
 

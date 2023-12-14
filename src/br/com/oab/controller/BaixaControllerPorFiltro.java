@@ -63,9 +63,11 @@ public class BaixaControllerPorFiltro {
 				        + "       D.TRN_ACQTRANSID  AS AUTORIZACAO,\r\n"
 						+ "       D.TRN_TRANSID     AS NUMDOC, \r\n" 
 				        + "       D.PMT_VALOR     AS VALOR, \r\n"
-						+ "       D.TRN_DHRECEB  AS DATARECEBIMENTO \r\n" + " FROM AD_GTNPMTORD D\r\n"
+						+ "       D.TRN_DHRECEB  AS DATARECEBIMENTO \r\n" 
+				        + " FROM AD_GTNPMTORD D\r\n"
 						+ " WHERE D.LINKID = '" + registro.getIdLink() + "'  \r\n"
-						+ "  AND D.PMT_STATUS = 'SUCCESSFUL'\r\n" + "  AND D.TRN_STATUS = 'APPROVED'");
+						+ "  AND D.PMT_STATUS = 'SUCCESSFUL'\r\n" 
+						+ "  AND D.TRN_STATUS = 'APPROVED'");
 
 				final ResultSet resultSetCartao = nativeSqlResultCartao.executeQuery();
 

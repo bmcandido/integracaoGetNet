@@ -7,17 +7,15 @@ import org.cuckoo.core.ScheduledAction;
 import org.cuckoo.core.ScheduledActionContext;
 
 import br.com.oab.controller.BaixaController;
-import br.com.oab.controller.IntegracaoGetnet;
 
-public class GetNetAcaoAgendada implements ScheduledAction {
+public class GetNetAcaoAgendadaBaixarTitulos implements ScheduledAction {
 
     @Override
     public void onTime(ScheduledActionContext ctx) {
         try {
 
-            consultaLinksEbuscaOrdensEfazBaixa();
+        	executaBaixaFinanceiro();
 
-            System.out.println("Ação agendada GETNET de consulta Ordens e Baixas realizada com sucesso!");
 
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
@@ -32,19 +30,16 @@ public class GetNetAcaoAgendada implements ScheduledAction {
 
     }
 
-    void consultaLinksEbuscaOrdensEfazBaixa() throws Exception {
+    void executaBaixaFinanceiro() throws Exception {
+    	
+    	 System.out.println("****************************************************************************");
+    	 System.out.println("Ação agendada GETNET Baixas");
+    	 System.out.println("****************************************************************************");
 
-        IntegracaoGetnet integracaoGetnet = new IntegracaoGetnet();
+
         BaixaController baixaTitulos = new BaixaController();
 
-        //Consulta os Links
 
-        integracaoGetnet.consultaLinksGetnet();
-
-        // Consulta As Ordens
-        integracaoGetnet.consultaOrdersGetnet();
-
-        // Faz as baixas
 
         baixaTitulos.buscaFinanceiroEBaixa();
 
