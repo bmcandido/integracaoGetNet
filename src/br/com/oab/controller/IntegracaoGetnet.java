@@ -332,7 +332,7 @@ public class IntegracaoGetnet {
 
 												dvoLink.setProperty("DTEXPIRA", expDate);
 												dvoLink.setProperty("DTINTEGRACAO", TimeUtils.getNow());
-												dvoLink.setProperty("ORIGEM", "CF");
+												dvoLink.setProperty("ORIGEM", "ZY");
 
 												dvoLink.setProperty("STATUS", retLinks.getStatus());
 												dvoLink.setProperty("DESCRIPTION", retLinks.getTitle());

@@ -1,14 +1,24 @@
 package br.com.oab.actions;
 
+
+
+import java.math.BigDecimal;
+
 import br.com.oab.controller.BaixaController;
 import br.com.sankhya.extensions.actionbutton.AcaoRotinaJava;
 import br.com.sankhya.extensions.actionbutton.ContextoAcao;
+import br.com.sankhya.modelcore.auth.AuthenticationInfo;
+import br.com.sankhya.ws.ServiceContext;
+
 
 public class BotaoBaixaTitulosGetNet implements AcaoRotinaJava {
 
 	@Override
 	public void doAction(ContextoAcao contexto) throws Exception {
-
+		
+		BigDecimal usuarioLogado = ((AuthenticationInfo) ServiceContext.getCurrent().getAutentication())
+				.getUserID();
+		
 		//BigDecimal codEmp = StringUtils.convertToBigDecimal(contexto.getParam("CODEMP").toString());
 		//String getTipo = (String) contexto.getParam("TIPO");
 
@@ -47,7 +57,7 @@ public class BotaoBaixaTitulosGetNet implements AcaoRotinaJava {
 			System.out.println("*************************************************");
 
 			BaixaController baixaTitulos = new BaixaController();
-			baixaTitulos.buscaFinanceiroEBaixa();
+			baixaTitulos.buscaFinanceiroEBaixa(usuarioLogado);
 
 			contexto.setMensagemRetorno("Títulos baixados com sucesso!");
 

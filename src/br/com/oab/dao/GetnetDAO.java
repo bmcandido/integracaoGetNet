@@ -31,7 +31,7 @@ public class GetnetDAO {
 				+ "                  FROM AD_GTNLINK L\r\n"
 				+ "                  WHERE L.LINKID = ori.LINKID\r\n"
 				+ "                   )\r\n"
-				+ "  AND ori.DHCRIACAO BETWEEN DATEADD(DAY, -3, GETDATE()) AND GETDATE()\r\n"
+				+ "  AND ori.DHCRIACAO BETWEEN DATEADD(DAY, -15, GETDATE()) AND GETDATE()\r\n"
 				+ "\r\n"
 				+ "");
 
@@ -67,7 +67,7 @@ public class GetnetDAO {
 				+ "from AD_GTNLINK l\r\n"
 				+ "where l.PAGSUCESSO > 0\r\n"
 				+ "  and not exists (select 1 from AD_GTNPMTORD ord where ord.LINKID = l.LINKID and ord.PMT_STATUS in ('SUCCESSFUL'))\r\n"
-				+ "  And CONVERT(DATE, l.DHCRIACAO) BETWEEN CONVERT(DATE, DATEADD(DAY, -3, GETDATE())) AND CONVERT(DATE, GETDATE())\r\n"
+				+ "  And CONVERT(DATE, l.DHCRIACAO) BETWEEN CONVERT(DATE, DATEADD(DAY, -15, GETDATE())) AND CONVERT(DATE, GETDATE())\r\n"
 				+ "order by l.DHCRIACAO");
 
 		final ResultSet resultSet = nativeSql.executeQuery();

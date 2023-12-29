@@ -2,6 +2,7 @@ package br.com.oab.acoesagendadas;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 
 import org.cuckoo.core.ScheduledAction;
 import org.cuckoo.core.ScheduledActionContext;
@@ -38,10 +39,12 @@ public class GetNetAcaoAgendadaBaixarTitulos implements ScheduledAction {
 
 
         BaixaController baixaTitulos = new BaixaController();
+        
+       BigDecimal usuarioBaixa = new BigDecimal(225);
 
 
 
-        baixaTitulos.buscaFinanceiroEBaixa();
+        baixaTitulos.buscaFinanceiroEBaixa(usuarioBaixa);
 
     }
 
