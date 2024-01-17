@@ -23,6 +23,7 @@ import br.com.oab.model.GetLinkModeoLinkFilther;
 import br.com.oab.model.GetLinkModeoLinkFilther.GetNetPagamentoOnlineFilther;
 import br.com.oab.model.GetnetLinkModel;
 import br.com.oab.model.GetnetPmtOrderModel;
+import br.com.oab.model.GetnetPmtOrderModel.PaymentsGTN.TransactionGTN.DebitGNT;
 import br.com.oab.model.LinkOrigModel;
 import br.com.oab.model.ParametrosModel;
 import br.com.oab.util.Http;
@@ -456,6 +457,10 @@ public class IntegracaoGetnet {
 
 						if (link != null) {
 
+							final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+							SimpleDateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+							dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
 							// Busca novo Token
 							final Map<String, String> headers = new HashMap<>();
 							headers.put("Authorization", "Bearer " + token);
@@ -539,56 +544,82 @@ public class IntegracaoGetnet {
 
 												if (registroPag.getPaymentType().equals("DEBIT")) {
 
-													if (registroPag.getNumberInstallments() != null) {
+													if (registroPag.getTransaction().getDebit() != null) {
+
+														final DebitGNT regDebit = registroPag.getTransaction()
+																.getDebit();
+
 														dvoOrd.setProperty("TRN_NUMPARC", BigDecimal.valueOf(1)); //
 
-													}
+														if (regDebit.getAuthorizationCode() != null) {
+															dvoOrd.setProperty("TRN_AUTHCODE",
+																	regDebit.getAuthorizationCode());
+														}
 
-													if (registroPag.getTransaction().getAuthorizationCode() != null) {
-														dvoOrd.setProperty("TRN_AUTHCODE",
-																registroPag.getTransaction().getAuthorizationCode());
-													}
+														if (registroPag.getTransactionType() != null) {
+															dvoOrd.setProperty("TRN_TRANSTYPE",
+																	registroPag.getTransactionType());
+														}
 
-													if (registroPag.getTransaction().getReasonCode() != null) {
-														dvoOrd.setProperty("TRN_REASONCODE",
-																registroPag.getTransaction().getReasonCode());
-													}
+														// Data Pagamento
 
-													if (registroPag.getTransaction().getBrand() != null) {
-														dvoOrd.setProperty("TRN_BRAND",
-																registroPag.getTransaction().getBrand());
+														if (registroPag.getRegistredAt() != null) {
 
-													}
+//															String strDhReceb = registroPag.getRegistredAt();
+//															strDhReceb = strDhReceb.replace("T", " ");
+//															strDhReceb = strDhReceb.substring(0, 19);
+//															Date parsedReceb = dateFormat.parse(strDhReceb);
+//															Timestamp receb_at = new java.sql.Timestamp(
+//																	parsedReceb.getTime());
 
-													if (registroPag.getTransaction().getAcquirerTransactionId() != null
+															String strExpDate = registroPag.getRegistredAt();
 
-															&& !registroPag.getTransaction().getAuthorizationCode()
-																	.isEmpty()) {
-														dvoOrd.setProperty("TRN_TERMINALNSU",
-																registroPag.getTransaction().getAuthorizationCode());
-													}
+															Date parseDateExpira = dateFormatSQL.parse(strExpDate);
+															Timestamp receb_at = new Timestamp(
+																	parseDateExpira.getTime());
 
-													if (registroPag.getTransaction().getAcquirerTransactionId() != null
+															dvoOrd.setProperty("TRN_DHRECEB", receb_at);
+															dvoOrd.setProperty("TRN_DHALTER", receb_at);
 
-													) {
-														dvoOrd.setProperty("TRN_ACQTRANSID", registroPag
-																.getTransaction().getAcquirerTransactionId());
+														}
 
-													}
+														if (regDebit.getReasonCode() != null) {
+															dvoOrd.setProperty("TRN_REASONCODE",
+																	regDebit.getReasonCode());
+														}
 
-													if (registroPag.getTransaction().getTransactionId() != null) {
+														if (regDebit.getBrand() != null) {
+															dvoOrd.setProperty("TRN_BRAND", regDebit.getBrand());
 
-														dvoOrd.setProperty("TRN_TRANSID",
-																registroPag.getTransaction().getTransactionId());
+														}
 
-													}
+														if (regDebit.getTerminalNsu() != null) {
+															dvoOrd.setProperty("TRN_TERMINALNSU",
+																	regDebit.getTerminalNsu());
+														}
 
-													if (registroPag.getTransaction().getReasonMessage() != null
-															&& !registroPag.getTransaction().getReasonMessage()
-																	.isEmpty()) {
+														if (regDebit.getAcquirerTransactionId() != null
 
-														dvoOrd.setProperty("TRN_REASONMSG",
-																registroPag.getTransaction().getReasonMessage());
+														) {
+															dvoOrd.setProperty("TRN_ACQTRANSID",
+																	regDebit.getAcquirerTransactionId());
+
+														}
+
+														if (regDebit.getTransactionId() != null) {
+
+															dvoOrd.setProperty("TRN_TRANSID",
+																	regDebit.getTransactionId());
+
+														}
+
+														if (regDebit.getReasonMessage() != null
+																&& !regDebit.getReasonMessage().isEmpty()) {
+
+															dvoOrd.setProperty("TRN_REASONMSG",
+																	regDebit.getReasonMessage());
+
+														}
 
 													}
 

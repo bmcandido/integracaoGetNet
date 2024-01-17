@@ -173,7 +173,12 @@ public class RenegociacaoFinanceiroController {
 
 			NativeSql sqlReturn = new NativeSql(jdbc);
 
-			sqlReturn.appendSql("SELECT  *FROM RetornaValoresCorrigidos(:NURENEG) GG");
+			//sqlReturn.appendSql("SELECT  *FROM RetornaValoresCorrigidos(:NURENEG) GG");
+			
+			sqlReturn.appendSql("SELECT SUM(F.VLRMULTANEGOC) VLRMULTANEGOC , SUM(F.VLRJURONEGOC) VLRJURONEGOC, SUM(F.VLRVENDOR) VLRCORRECAO\r\n"
+					+ "FROM TGFFIN F WHERE F.NURENEG = :NURENEG \r\n"
+					+ "AND F.RECDESP = 0");
+			
 
 			sqlReturn.setNamedParameter("NURENEG", nureneg);
 
@@ -223,10 +228,14 @@ public class RenegociacaoFinanceiroController {
 
 			sqlReturn.appendSql("SELECT MAX(GG.PARCELA) PARCELA FROM (SELECT MAX(isnull(N.AD_NUMEROPARCELAS,\r\n"
 					+ "                  cast(SUBSTRING(F.PARCRENEG, CHARINDEX('/', F.PARCRENEG) + 1, LEN(F.PARCRENEG)) as int))) PARCELA,\r\n"
-					+ "       F.NURENEG\r\n" + "FROM TGFFIN F\r\n"
-					+ "         LEFT JOIN TGFREN N ON F.NUFIN = N.NUFIN\r\n" + "WHERE F.RECDESP = 1\r\n"
-					+ "GROUP BY F.NURENEG\r\n" + "UNION ALL\r\n"
-					+ "SELECT N.AD_NUMEROPARCELAS, N.NURENEG FROM TGFREN N) GG\r\n" + "WHERE GG.NURENEG = :NURENEG");
+					+ "       F.NURENEG\r\n" 
+					+ "FROM TGFFIN F\r\n"
+					+ "         LEFT JOIN TGFREN N ON F.NUFIN = N.NUFIN\r\n" 
+					+ "WHERE F.RECDESP = 1\r\n"
+					+ "GROUP BY F.NURENEG\r\n" 
+					+ "UNION ALL\r\n"
+					+ "SELECT N.AD_NUMEROPARCELAS, N.NURENEG FROM TGFREN N) GG\r\n" 
+					+ "WHERE GG.NURENEG = :NURENEG");
 
 			sqlReturn.setNamedParameter("NURENEG", nureneg);
 

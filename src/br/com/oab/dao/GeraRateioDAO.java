@@ -87,8 +87,8 @@ public class GeraRateioDAO {
 
 					vlrRateioCorrecao = vlrRateioCorrecao.add(vlrRateioCorrecaoRecDespZero);
 
-					vlrTitulo = BigDecimalUtil.getRounded(vlrTitulo.add(resultRecDesp1.getVlrDesdob())
-							.subtract(vlrRateioJuros).subtract(vlrRateioMulta).subtract(vlrRateioCorrecao), 2);
+//					vlrTitulo = BigDecimalUtil.getRounded(vlrTitulo.add(resultRecDesp1.getVlrDesdob())
+//							.subtract(vlrRateioJuros).subtract(vlrRateioMulta).subtract(vlrRateioCorrecao), 2);
 
 					// Faz o Insert no rateio do RecDesp = 1;
 
@@ -171,26 +171,26 @@ public class GeraRateioDAO {
 			sqlReturn.appendSql("SELECT SUM(VLRDESDOB) AS VLRDESDOB, GG.CODNAT, GG.CAMPO, GG.TIPO\r\n"
 					+ "FROM (SELECT SUM(VLRDESDOB)                                   AS VLRDESDOB,\r\n"
 					+ "             CASE WHEN CODNAT = 0 THEN 101010 ELSE CODNAT END AS CODNAT,\r\n"
-					+ "             CAMPO,\r\n"
+					+ "             CAMPO,\r\n" 
 					+ "             CASE\r\n"
 					+ "                 WHEN CODNAT IN (SELECT CODNAT\r\n"
 					+ "                                 from AD_PARRENEGRATEIO d\r\n"
 					+ "                                 where d.NUPAR = 1) THEN 'RP'\r\n"
 					+ "                 ELSE TIPO END                                   TIPO\r\n"
 					+ "      FROM (SELECT ISNULL((select CAMPO from AD_PARRENEGRATEIO d where d.NUPAR = 1 AND D.CODNAT = V.CODNAT),\r\n"
-					+ "                          'VLRDESDOB') CAMPO,\r\n"
+					+ "                          'VLRDESDOB') CAMPO,\r\n" 
 					+ "                   V.CODNAT,\r\n"
-					+ "                   V.VLRDESDOB,\r\n"
+					+ "                   V.VLRDESDOB,\r\n" 
 					+ "                   'RA'                TIPO\r\n"
-					+ "            FROM VGFFINRAT_OAB V\r\n"
+					+ "            FROM VGFFINRAT_OAB V\r\n" 
 					+ "            WHERE V.NURENEG = :NURENEG\r\n"
 					+ "              AND V.RECDESP = 0\r\n"
 					+ "            --AND NOT EXISTS (select 1 from AD_PARRENEGRATEIO d where d.NUPAR = 1 AND D.CODNAT = V.CODNAT)\r\n"
-					+ "            UNION ALL\r\n"
+					+ "            UNION ALL\r\n" 
 					+ "            select CAMPO, CODNAT, 0, 'RP' TIPO\r\n"
-					+ "            from AD_PARRENEGRATEIO d\r\n"
+					+ "            from AD_PARRENEGRATEIO d\r\n" 
 					+ "            where d.NUPAR = 1) VV\r\n"
-					+ "      GROUP BY CODNAT, CAMPO, TIPO) GG\r\n"
+					+ "      GROUP BY CODNAT, CAMPO, TIPO) GG\r\n" 
 					+ "GROUP BY GG.CODNAT, GG.CAMPO, GG.TIPO\r\n"
 					+ "ORDER BY TIPO, 1");
 
@@ -201,55 +201,69 @@ public class GeraRateioDAO {
 			BigDecimal percAcumulado = BigDecimalUtil.ZERO_VALUE;
 			BigDecimal vlrRateio = BigDecimalUtil.ZERO_VALUE;
 			BigDecimal codnat = BigDecimalUtil.ZERO_VALUE;
-			BigDecimal vlrOutrosRateios = BigDecimalUtil.ZERO_VALUE;
+			//BigDecimal vlrOutrosRateios = BigDecimalUtil.ZERO_VALUE;
 
 			// P = PARAMETRO
 			// R = RATEIO
 
 			while (resultSet.next()) {
-				
+
 				linhas++;
 
 				System.out.println("Entrou na condição pra fazer o rateio");
 
 				if ("JUROS".equals(resultSet.getString(("CAMPO"))) && "RP".equals(resultSet.getString(("TIPO")))) {
-					vlrRateio = juros;
+					vlrRateio = BigDecimalUtil
+							.getRounded(juros.divide(quantidadeDeTitulosRenegociados, SCALE, RoundingMode.HALF_UP), 2);
 
 				} else if ("MULTA".equals(resultSet.getString(("CAMPO")))
 						&& "RP".equals(resultSet.getString(("TIPO")))) {
 
-					vlrRateio = multa;
+					vlrRateio = BigDecimalUtil
+							.getRounded(multa.divide(quantidadeDeTitulosRenegociados, SCALE, RoundingMode.HALF_UP), 2);
 
 				} else if ("CORRECAO".equals(resultSet.getString(("CAMPO")))
 						&& "RP".equals(resultSet.getString(("TIPO")))) {
 
-					vlrRateio = correcao;
+					vlrRateio = BigDecimalUtil.getRounded(
+							correcao.divide(quantidadeDeTitulosRenegociados, SCALE, RoundingMode.HALF_UP), 2);
 
-				} else if ("VLRDESDOB".equals(resultSet.getString(("CAMPO")))
-						&& "RA".equals(resultSet.getString(("TIPO")))) {
+				} else {
 
-					vlrOutrosRateios = vlrOutrosRateios.add(resultSet.getBigDecimal("VLRDESDOB"));
-
-					vlrOutrosRateios = BigDecimalUtil.getRounded(
-							vlrOutrosRateios.divide(quantidadeDeTitulosRenegociados, SCALE, RoundingMode.HALF_UP), 2);
-
-					vlrRateio = vlrOutrosRateios;
-				} else if ("VLRDESDOB".equals(resultSet.getString(("CAMPO")))
-						&& "RP".equals(resultSet.getString(("TIPO")))) {
-
-					if (resultSet.getBigDecimal("VLRDESDOB").compareTo(new BigDecimal(0)) > 0) {
-
-						vlrRateio = BigDecimalUtil.getRounded(resultSet.getBigDecimal("VLRDESDOB")
-								.divide(quantidadeDeTitulosRenegociados, SCALE, RoundingMode.HALF_UP), 2);
-
-					} else {
-
-						vlrRateio = vlrTitulo.subtract(vlrOutrosRateios);
-
-					}
+					vlrRateio = BigDecimalUtil.getRounded(resultSet.getBigDecimal("VLRDESDOB")
+							.divide(quantidadeDeTitulosRenegociados, SCALE, RoundingMode.HALF_UP), 2);
 
 				}
 
+//				else if ("VLRDESDOB".equals(resultSet.getString(("CAMPO")))
+//						&& "RA".equals(resultSet.getString(("TIPO")))) {
+//
+//					vlrOutrosRateios = vlrOutrosRateios.add(resultSet.getBigDecimal("VLRDESDOB"));
+//
+//					vlrOutrosRateios = BigDecimalUtil.getRounded(
+//							vlrOutrosRateios.divide(quantidadeDeTitulosRenegociados, SCALE, RoundingMode.HALF_UP), 2);
+//
+//					vlrRateio = vlrOutrosRateios;
+//				} else {
+//					
+//				}
+//				
+//				else if ("VLRDESDOB".equals(resultSet.getString(("CAMPO")))
+//						&& "RP".equals(resultSet.getString(("TIPO")))) {
+//
+//					if (resultSet.getBigDecimal("VLRDESDOB").compareTo(new BigDecimal(0)) > 0) {
+//
+//						vlrRateio = BigDecimalUtil.getRounded(resultSet.getBigDecimal("VLRDESDOB")
+//								.divide(quantidadeDeTitulosRenegociados, SCALE, RoundingMode.HALF_UP), 2);
+//
+//					} else {
+//
+//						vlrRateio = vlrTitulo.subtract(vlrOutrosRateios);
+//
+//					}
+//
+//				}
+//
 				if (resultSet.getBigDecimal("CODNAT").compareTo(BigDecimal.ZERO) == 0) {
 					codnat = resultRateio.getCodnat();
 				} else {
@@ -258,11 +272,8 @@ public class GeraRateioDAO {
 
 				if (vlrRateio.compareTo(BigDecimal.ZERO) > 0) {
 
-				
-
 					BigDecimal percentual = BigDecimalUtil.ZERO_VALUE;
-					
-					
+
 					System.out.println("Linhas do While : " + linhas);
 					System.out.println("Linhas Total : " + rowCount);
 
@@ -341,7 +352,7 @@ public class GeraRateioDAO {
 	}
 
 	public int retornaNumeLinhasParaRateio(JdbcWrapper jdbc, BigDecimal nureneg) throws Exception {
-		
+
 		System.out.println("Retornando numero de Linhas");
 
 		int rownum = 0;
@@ -352,26 +363,26 @@ public class GeraRateioDAO {
 			sqlReturn.appendSql("SELECT SUM(VLRDESDOB) AS VLRDESDOB, GG.CODNAT, GG.CAMPO, GG.TIPO\r\n"
 					+ "FROM (SELECT SUM(VLRDESDOB)                                   AS VLRDESDOB,\r\n"
 					+ "             CASE WHEN CODNAT = 0 THEN 101010 ELSE CODNAT END AS CODNAT,\r\n"
-					+ "             CAMPO,\r\n"
+					+ "             CAMPO,\r\n" 
 					+ "             CASE\r\n"
 					+ "                 WHEN CODNAT IN (SELECT CODNAT\r\n"
 					+ "                                 from AD_PARRENEGRATEIO d\r\n"
 					+ "                                 where d.NUPAR = 1) THEN 'RP'\r\n"
 					+ "                 ELSE TIPO END                                   TIPO\r\n"
 					+ "      FROM (SELECT ISNULL((select CAMPO from AD_PARRENEGRATEIO d where d.NUPAR = 1 AND D.CODNAT = V.CODNAT),\r\n"
-					+ "                          'VLRDESDOB') CAMPO,\r\n"
+					+ "                          'VLRDESDOB') CAMPO,\r\n" 
 					+ "                   V.CODNAT,\r\n"
-					+ "                   V.VLRDESDOB,\r\n"
+					+ "                   V.VLRDESDOB,\r\n" 
 					+ "                   'RA'                TIPO\r\n"
-					+ "            FROM VGFFINRAT_OAB V\r\n"
+					+ "            FROM VGFFINRAT_OAB V\r\n" 
 					+ "            WHERE V.NURENEG = :NURENEG\r\n"
 					+ "              AND V.RECDESP = 0\r\n"
 					+ "            --AND NOT EXISTS (select 1 from AD_PARRENEGRATEIO d where d.NUPAR = 1 AND D.CODNAT = V.CODNAT)\r\n"
-					+ "            UNION ALL\r\n"
+					+ "            UNION ALL\r\n" 
 					+ "            select CAMPO, CODNAT, 0, 'RP' TIPO\r\n"
-					+ "            from AD_PARRENEGRATEIO d\r\n"
-					+ "            where d.NUPAR = 1) VV\r\n"
-					+ "      GROUP BY CODNAT, CAMPO, TIPO) GG\r\n"
+					+ "            from AD_PARRENEGRATEIO d\r\n" 
+					+ "            where d.NUPAR = 1  AND D.CAMPO != 'VLRDESDOB') VV\r\n"
+					+ "      GROUP BY CODNAT, CAMPO, TIPO) GG\r\n" 
 					+ "GROUP BY GG.CODNAT, GG.CAMPO, GG.TIPO\r\n"
 					+ "ORDER BY TIPO, 1");
 
@@ -396,7 +407,7 @@ public class GeraRateioDAO {
 			mensagem.append("Erro executar o rateio : " + e.getMessage() + sw.toString());
 			System.out.println("erro - " + e.getMessage() + sw.toString());
 		}
-		
+
 		System.out.println("Numero de linhas retornadas : " + rownum);
 
 		return rownum;
@@ -477,7 +488,5 @@ public class GeraRateioDAO {
 			JapeSession.close(hnd);
 		}
 	}
-	
-
 
 }

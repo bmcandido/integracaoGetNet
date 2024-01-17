@@ -482,6 +482,50 @@ public class GetnetPmtOrderModel {
 		}
 
 		public static class TransactionGTN {
+
+			@SerializedName("seller_id")
+			private String sellerId;
+			@SerializedName("amount")
+			private Integer amount;
+			@SerializedName("currency")
+			private String currency;
+			@SerializedName("order_id")
+			private String orderId;
+			@SerializedName("status")
+			private String status;
+			@SerializedName("payment_id")
+			private String paymentId;
+			@SerializedName("received_at")
+			private String receivedAt;
+			@SerializedName("payment_method")
+			private String paymentMethod;
+			@SerializedName("transaction_id")
+			private String transactionId;
+			@SerializedName("original_transaction_id")
+			private String originalTransactionId;
+			@SerializedName("authorized_at")
+			private String authorizedAt;
+			@SerializedName("reason_code")
+			private String reasonCode;
+			@SerializedName("reason_message")
+			private String reasonMessage;
+			@SerializedName("acquirer")
+			private String acquirer;
+			@SerializedName("brand")
+			private String brand;
+			@SerializedName("authorization_code")
+			private String authorizationCode;
+			@SerializedName("acquirer_transaction_id")
+			private String acquirerTransactionId;
+			@SerializedName("eci")
+			private String eci;
+			@SerializedName("brand_type")
+			private String brandType;
+			@SerializedName("credit")
+			private CreditGTN credit;
+			@SerializedName("debit")
+			private DebitGNT debit;
+
 			public String getPaymentMethod() {
 				return paymentMethod;
 			}
@@ -582,48 +626,6 @@ public class GetnetPmtOrderModel {
 				return sellerId;
 			}
 
-			@SerializedName("seller_id")
-			private String sellerId;
-			@SerializedName("amount")
-			private Integer amount;
-			@SerializedName("currency")
-			private String currency;
-			@SerializedName("order_id")
-			private String orderId;
-			@SerializedName("status")
-			private String status;
-			@SerializedName("payment_id")
-			private String paymentId;
-			@SerializedName("received_at")
-			private String receivedAt;
-            @SerializedName("payment_method")
-            private String paymentMethod;
-            @SerializedName("transaction_id")
-            private String transactionId;
-            @SerializedName("original_transaction_id")
-            private String originalTransactionId;
-            @SerializedName("authorized_at")
-            private String authorizedAt;
-            @SerializedName("reason_code")
-            private String reasonCode;
-            @SerializedName("reason_message")
-            private String reasonMessage;
-            @SerializedName("acquirer")
-            private String acquirer;
-            @SerializedName("brand")
-            private String brand;
-            @SerializedName("authorization_code")
-            private String authorizationCode;
-            @SerializedName("acquirer_transaction_id")
-            private String acquirerTransactionId;
-            @SerializedName("eci")
-            private String eci;
-            @SerializedName("brand_type")
-            private String brandType;
-        	@SerializedName("credit")
-			private CreditGTN credit;
-
-
 			public void setSellerId(String sellerId) {
 				this.sellerId = sellerId;
 			}
@@ -682,6 +684,14 @@ public class GetnetPmtOrderModel {
 
 			public void setCredit(CreditGTN credit) {
 				this.credit = credit;
+			}
+
+			public DebitGNT getDebit() {
+				return debit;
+			}
+
+			public void setDebit(DebitGNT debit) {
+				this.debit = debit;
 			}
 
 			public static class CreditGTN {
@@ -796,7 +806,112 @@ public class GetnetPmtOrderModel {
 					this.transactionId = transactionId;
 				}
 			}
-			
+
+			public static class DebitGNT {
+
+				@SerializedName("authorization_code")
+				private String authorizationCode;
+				@SerializedName("authorized_timestamp")
+				private String authorizedtimestamp;
+				@SerializedName("reason_code")
+				private String reasonCode;
+				@SerializedName("reason_message")
+				private String reasonMessage;
+				@SerializedName("acquirer")
+				private String acquirer;
+				@SerializedName("soft_descriptor")
+				private String softDescriptor;
+				@SerializedName("brand")
+				private String brand;
+				@SerializedName("terminal_nsu")
+				private String terminalNsu;
+				@SerializedName("acquirer_transaction_id")
+				private String acquirerTransactionId;
+				@SerializedName("transaction_id")
+				private String transactionId;
+				
+
+				public String getAuthorizationCode() {
+					return authorizationCode;
+				}
+
+				public void setAuthorizationCode(String authorizationCode) {
+					this.authorizationCode = authorizationCode;
+				}
+
+				public String getAuthorizedtimestamp() {
+					return authorizedtimestamp;
+				}
+
+				public void setAuthorizedtimestamp(String authorizedtimestamp) {
+					this.authorizedtimestamp = authorizedtimestamp;
+				}
+
+				public String getReasonCode() {
+					return reasonCode;
+				}
+
+				public void setReasonCode(String reasonCode) {
+					this.reasonCode = reasonCode;
+				}
+
+				public String getReasonMessage() {
+					return reasonMessage;
+				}
+
+				public void setReasonMessage(String reasonMessage) {
+					this.reasonMessage = reasonMessage;
+				}
+
+				public String getAcquirer() {
+					return acquirer;
+				}
+
+				public void setAcquirer(String acquirer) {
+					this.acquirer = acquirer;
+				}
+
+				public String getSoftDescriptor() {
+					return softDescriptor;
+				}
+
+				public void setSoftDescriptor(String softDescriptor) {
+					this.softDescriptor = softDescriptor;
+				}
+
+				public String getBrand() {
+					return brand;
+				}
+
+				public void setBrand(String brand) {
+					this.brand = brand;
+				}
+
+				public String getTerminalNsu() {
+					return terminalNsu;
+				}
+
+				public void setTerminalNsu(String terminalNsu) {
+					this.terminalNsu = terminalNsu;
+				}
+
+				public String getAcquirerTransactionId() {
+					return acquirerTransactionId;
+				}
+
+				public void setAcquirerTransactionId(String acquirerTransactionId) {
+					this.acquirerTransactionId = acquirerTransactionId;
+				}
+
+				public String getTransactionId() {
+					return transactionId;
+				}
+
+				public void setTransactionId(String transactionId) {
+					this.transactionId = transactionId;
+				}
+			}
+
 		}
 	}
 }
