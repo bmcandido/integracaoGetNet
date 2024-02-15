@@ -5,11 +5,23 @@ import java.math.BigDecimal;
 
 public class LinkOrigModel {
 
-    BigDecimal nuReneg;
+
+
+	BigDecimal nuReneg;
     String linkId;
     String link;
+    String linkIdOrder;
+    String dhBaixa;
 
-    public BigDecimal getNuReneg() {
+    public String getDhBaixa() {
+		return dhBaixa;
+	}
+
+	public void setDhBaixa(String dhBaixa) {
+		this.dhBaixa = dhBaixa;
+	}
+
+	public BigDecimal getNuReneg() {
         return nuReneg;
     }
 
@@ -32,5 +44,13 @@ public class LinkOrigModel {
     public void setLink(String link) {
         this.link = link;
     }
+    
+    public String getLinkIdOrder() {
+		return linkIdOrder;
+	}
+
+	public void setLinkIdOrder(String linkIdOrder) {
+		this.linkIdOrder = linkIdOrder;
+	}
 }
 

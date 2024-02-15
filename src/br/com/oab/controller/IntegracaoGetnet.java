@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import com.google.gson.Gson;
+import com.sankhya.util.BigDecimalUtil;
+import com.sankhya.util.StringUtils;
 import com.sankhya.util.TimeUtils;
 
 import br.com.oab.dao.ChaveDAO;
@@ -34,6 +36,9 @@ import br.com.sankhya.jape.dao.JdbcWrapper;
 import br.com.sankhya.jape.sql.NativeSql;
 import br.com.sankhya.jape.vo.DynamicVO;
 import br.com.sankhya.jape.vo.EntityVO;
+import br.com.sankhya.jape.wrapper.JapeFactory;
+import br.com.sankhya.jape.wrapper.JapeWrapper;
+import br.com.sankhya.modelcore.util.DynamicEntityNames;
 import br.com.sankhya.modelcore.util.EntityFacadeFactory;
 
 public class IntegracaoGetnet {
@@ -147,68 +152,92 @@ public class IntegracaoGetnet {
 
 								System.out.println("Atribuiu gson Consulta do Link " + link.getLink());
 
-								final DynamicVO dvoLink = (DynamicVO) entityFacade
-										.getDefaultValueObjectInstance("AD_GTNLINK");
+								// Alterado dia 24/01/2024 pois descobri que o link pode ser integrado com o
+								// campo "PAGSUCESSO" = 0
+								// depois ele pode ser alterado para 1
 
-								dvoLink.setProperty("LINKID", link.getLinkId());
-								dvoLink.setProperty("LABEL", LinkGetnet.getLabel());
+								// Caso nao tenha o registro ele vai inserir
+								
+								System.out.println("Data da Baixa : " + link.getDhBaixa() );
+								System.out.println("Quantidade De Ordens : " + LinkGetnet.getSuccessfulOrders() );
+								if (link.getLinkIdOrder() == null) {
 
-								String strExpDate = LinkGetnet.getExpiration();
+									final DynamicVO dvoLink = (DynamicVO) entityFacade
+											.getDefaultValueObjectInstance("AD_GTNLINK");
 
-								Date parseDateExpira = dateFormatSQL.parse(strExpDate);
-								Timestamp expDate = new Timestamp(parseDateExpira.getTime());
+									dvoLink.setProperty("LINKID", link.getLinkId());
+									dvoLink.setProperty("LABEL", LinkGetnet.getLabel());
+
+									String strExpDate = LinkGetnet.getExpiration();
+
+									Date parseDateExpira = dateFormatSQL.parse(strExpDate);
+									Timestamp expDate = new Timestamp(parseDateExpira.getTime());
 
 //								strExpDate = strExpDate.replace("T", " ");
 //								strExpDate = strExpDate.substring(0, 19);
 //								Date parsedDate = dateFormat.parse(strExpDate);
 //								Timestamp expDate = new java.sql.Timestamp(parsedDate.getTime());
-								dvoLink.setProperty("DTEXPIRA", expDate);
-								dvoLink.setProperty("DTINTEGRACAO", TimeUtils.getNow());
+									dvoLink.setProperty("DTEXPIRA", expDate);
+									dvoLink.setProperty("DTINTEGRACAO", TimeUtils.getNow());
 
-								dvoLink.setProperty("STATUS", LinkGetnet.getStatus());
-								dvoLink.setProperty("DESCRIPTION", LinkGetnet.getOrder().getDescription());
-								dvoLink.setProperty("VALOR",
-										new BigDecimal(LinkGetnet.getOrder().getAmount()).divide(new BigDecimal(100)));
-								dvoLink.setProperty("MAXPARCELAS",
-										new BigDecimal(LinkGetnet.getPayment().getCredit().getMaxInstallments()));
-								dvoLink.setProperty("PAGSUCESSO", new BigDecimal(LinkGetnet.getSuccessfulOrders()));
+									dvoLink.setProperty("STATUS", LinkGetnet.getStatus());
+									dvoLink.setProperty("DESCRIPTION", LinkGetnet.getOrder().getDescription());
+									dvoLink.setProperty("VALOR", new BigDecimal(LinkGetnet.getOrder().getAmount())
+											.divide(new BigDecimal(100)));
+									dvoLink.setProperty("MAXPARCELAS",
+											new BigDecimal(LinkGetnet.getPayment().getCredit().getMaxInstallments()));
+									dvoLink.setProperty("PAGSUCESSO", new BigDecimal(LinkGetnet.getSuccessfulOrders()));
 
-								dvoLink.setProperty("ORIGEM", "ZY");
+									dvoLink.setProperty("ORIGEM", "ZY");
 
-								if (LinkGetnet.getOrder().getOrderPrefix() != null) {
-									dvoLink.setProperty("ORDERPREFIX", LinkGetnet.getOrder().getOrderPrefix());
-								}
-								String strOrderCreated = LinkGetnet.getCreatedAt();
+									if (LinkGetnet.getOrder().getOrderPrefix() != null) {
+										dvoLink.setProperty("ORDERPREFIX", LinkGetnet.getOrder().getOrderPrefix());
+									}
+									String strOrderCreated = LinkGetnet.getCreatedAt();
 //								strOrderCreated = strOrderCreated.replace("T", " ");
 //								strOrderCreated = strOrderCreated.substring(0, 19);
 //								Date parsedCreated = dateFormat.parse(strOrderCreated);
 //								Timestamp createdDate = new java.sql.Timestamp(parsedCreated.getTime());
 
-								Date dateRetParseCreate = dateFormatSQL.parse(strOrderCreated);
+									Date dateRetParseCreate = dateFormatSQL.parse(strOrderCreated);
 
-								Timestamp createdDate = new Timestamp(dateRetParseCreate.getTime());
+									Timestamp createdDate = new Timestamp(dateRetParseCreate.getTime());
 
-								dvoLink.setProperty("DHCRIACAO", createdDate);
+									dvoLink.setProperty("DHCRIACAO", createdDate);
 
-								if (LinkGetnet.getLastOrderAt() != null) {
-									String strLastOrder = LinkGetnet.getLastOrderAt();
+									if (LinkGetnet.getLastOrderAt() != null) {
+										String strLastOrder = LinkGetnet.getLastOrderAt();
 //									strLastOrder = strLastOrder.replace("T", " ");
 //									strLastOrder = strLastOrder.substring(0, 19);
 //									Date parsedLastOrder = dateFormat.parse(strLastOrder);
 //									Timestamp lastDate = new java.sql.Timestamp(parsedLastOrder.getTime());
 
-									Date dateRetParseLastOrder = dateFormatSQL.parse(strLastOrder);
+										Date dateRetParseLastOrder = dateFormatSQL.parse(strLastOrder);
 
-									Timestamp createdDateLastOrder = new Timestamp(dateRetParseLastOrder.getTime());
+										Timestamp createdDateLastOrder = new Timestamp(dateRetParseLastOrder.getTime());
 
-									dvoLink.setProperty("DHALTERACAO", createdDateLastOrder);
-								}
+										dvoLink.setProperty("DHALTERACAO", createdDateLastOrder);
+									}
 
-								dvoLink.setProperty("QTDACESSOS", new BigDecimal(LinkGetnet.getAccessCounter()));
+									dvoLink.setProperty("QTDACESSOS", new BigDecimal(LinkGetnet.getAccessCounter()));
 //                                    dvoLink.setProperty("MD5", LinkGetnet.getHash());
 
-								entityFacade.createEntity("AD_GTNLINK", (EntityVO) dvoLink);
-								System.out.println("Criou registro AD_GTNLINK");
+									entityFacade.createEntity("AD_GTNLINK", (EntityVO) dvoLink);
+									System.out.println("Criou Registro AD_GTNLINK : " + link.getLinkId());
+
+								} else if ( link.getDhBaixa() == null &&
+										 LinkGetnet.getSuccessfulOrders() > 0) {
+
+									JapeFactory.dao("AD_GTNLINK").prepareToUpdateByPK(link.getLinkId())
+											.set("PAGSUCESSO", new BigDecimal(LinkGetnet.getSuccessfulOrders()))
+											.set("VALOR",
+													new BigDecimal(LinkGetnet.getOrder().getAmount())
+															.divide(new BigDecimal(100)))
+											.set("STATUS", LinkGetnet.getStatus())
+											.set("DESCRIPTION", LinkGetnet.getOrder().getDescription()).update();
+
+									System.out.println("Alterou Registro AD_GTNLINK : " + link.getLinkId());
+								}
 
 							}
 

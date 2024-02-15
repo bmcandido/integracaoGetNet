@@ -25,14 +25,19 @@ public class GetnetDAO {
 		List<LinkOrigModel> ListalinkOrig = new ArrayList<LinkOrigModel>();
 
 		final NativeSql nativeSql = new NativeSql(jdbcWrapper);
-		nativeSql.appendSql("SELECT ori.NURENEG, ori.LINKID, ori.link, ori.NUFIN\r\n"
+		
+		//Alterado dia 24/01/2024 pois descobri que o link pode ser integrado com o campo "PAGSUCESSO" = 0 
+		// depois ele pode ser alterado para 1
+		nativeSql.appendSql("SELECT ori.NURENEG,\r\n"
+				+ "       ori.LINKID,\r\n"
+				+ "       ori.link,\r\n"
+				+ "       ori.NUFIN,\r\n"
+				+ "       dd.LINKID                            LINKIDORDER,\r\n"
+				+ "       CONVERT(varchar, dd.DHBAIXA, 103) as DHBAIXA\r\n"
 				+ "FROM AD_GETNETPAYMENTLINK ori\r\n"
-				+ "WHERE NOT EXISTS (SELECT 1\r\n"
-				+ "                  FROM AD_GTNLINK L\r\n"
-				+ "                  WHERE L.LINKID = ori.LINKID\r\n"
-				+ "                   )\r\n"
-				+ "  AND ori.DHCRIACAO BETWEEN DATEADD(DAY, -2, GETDATE()) AND GETDATE()\r\n"
-				+ "\r\n"
+				+ "         left join AD_GTNLINK DD ON DD.LINKID = ORI.LINKID\r\n"
+				+ "WHERE ori.DHCRIACAO BETWEEN DATEADD(DAY, -1, GETDATE()) AND GETDATE()\r\n"
+				//+ "  and ori.LINKID = '1-PLp7RkO'"
 				+ "");
 
 		final ResultSet resultSet = nativeSql.executeQuery();
@@ -42,6 +47,8 @@ public class GetnetDAO {
 			linkOrig.setNuReneg(resultSet.getBigDecimal("NURENEG"));
 			linkOrig.setLinkId(resultSet.getString("LINKID"));
 			linkOrig.setLink(resultSet.getString("LINK"));
+			linkOrig.setDhBaixa(resultSet.getString("DHBAIXA"));
+			linkOrig.setLinkIdOrder(resultSet.getString("LINKIDORDER"));
 			ListalinkOrig.add(linkOrig);
 
 		}

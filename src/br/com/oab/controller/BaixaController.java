@@ -53,7 +53,29 @@ public class BaixaController {
 
 				Collection<DynamicVO> financeiros = dwfEntityFacade.findByDynamicFinderAsVO(findTitABaixar);
 
+				/*
+				 * Alterado dia 24/01/2024, isso foi feito desta forma pois a Zydon quando gera
+				 * o pagamento do cartão nao envia todos os NUFINS existentes no pagamento ela
+				 * envia somente um, assim não tem como identificar quando o título é
+				 * renegociado qual(is) título(s) estão sendo pagos, exemplo, se o usuario
+				 * parcelar em 10 x na tabela AD_GETNETPAYMENTLINK é enviado um unico Nro único
+				 * e para baixar todos os títulos oriundos da negociacao pegamos o campo NURENEG
+				 * 
+				 * A alteração ocorreu pq um advogado parcelou no boleto e pagou uma prestacao
+				 * no cartao de crédito logo a Zydon enviou para a tabela AD_GETNETPAYMENTLINK o
+				 * NURENEG, como nao estamos separando por tipo de título (Zydon nao altera o
+				 * tipo de título) a rotina baixou todos os titulos pois o NURENEG está
+				 * preenchido alteramos para verificar se o numero de parcelas equivale a
+				 * quantidade de títulos, caso for menor ele irá pegar somente o nufin e baixar
+				 * somente ele
+				 */
+
+				int qtdTitulosABaixar = 0;
+				
+
 				for (DynamicVO finVO : financeiros) {
+
+					qtdTitulosABaixar++;
 
 					final NativeSql nativeSqlResultCartao = new NativeSql(jdbc);
 
@@ -64,20 +86,21 @@ public class BaixaController {
 							"* Vai entrar na query nativeSql =  Busca dados do TEF-Registro : " + registro.getIdLink());
 					System.out.println("*********************");
 
-					nativeSqlResultCartao.appendSql(
-							"SELECT TOP 1 \r\n" 
-					        + "       D.TRN_BRAND       AS BANDEIRA,\r\n"
-							+ "       D.TRN_TERMINALNSU AS NUSU,\r\n" 
-					        + "       D.TRN_ACQTRANSID  AS AUTORIZACAO,\r\n"
-							+ "       D.TRN_TRANSID     AS NUMDOC, \r\n" 
-					        + "       ISNULL(D.PMT_VALOR,0)     AS VALOR, \r\n"
-							+ "       D.TRN_DHRECEB  AS DATARECEBIMENTO, \r\n" 
-							+ "       isnull(D.TRN_NUMPARC,1) AS PARCELAS \r\n" 
-					        + " FROM AD_GTNPMTORD D\r\n"
-							+ " WHERE D.LINKID = '" + registro.getIdLink() 
-							+ "'  \r\n"
-							+ "  AND D.PMT_STATUS = 'SUCCESSFUL'\r\n" 
-							+ "  AND D.TRN_STATUS = 'APPROVED'");
+					nativeSqlResultCartao.appendSql("SELECT TOP 1 D.TRN_BRAND            AS BANDEIRA,\r\n"
+							+ "		             D.TRN_TERMINALNSU      AS NUSU,\r\n"
+							+ "		             D.TRN_ACQTRANSID       AS AUTORIZACAO,\r\n"
+							+ "		             D.TRN_TRANSID          AS NUMDOC,\r\n"
+							+ "		             ISNULL(D.PMT_VALOR, 0) AS VALOR,\r\n"
+							+ "		             D.TRN_DHRECEB          AS DATARECEBIMENTO,\r\n"
+							+ "		             gg.MAXPARCELAS         as PARCELAS\r\n"
+							+ "		from AD_GTNPMTORD d\r\n"
+							+ "		         inner join AD_GTNLINK gg on gg.LINKID = d.LINKID\r\n"
+							+ "		WHERE D.LINKID = '" + registro.getIdLink()+"' \r\n"
+							+ "		  AND D.PMT_STATUS = 'SUCCESSFUL'\r\n"
+							+ "		  AND D.TRN_STATUS = 'APPROVED'");
+					
+					
+					
 
 					final ResultSet resultSetCartao = nativeSqlResultCartao.executeQuery();
 
@@ -88,22 +111,28 @@ public class BaixaController {
 					if (resultSetCartao.next()) {
 
 						final Timestamp dataBaixa = resultSetCartao.getTimestamp("DATARECEBIMENTO");
-						
-						 BigDecimal vlrBaixa = BigDecimalUtil.ZERO_VALUE;
-						
-						 BigDecimal parcelas = resultSetCartao.getBigDecimal("PARCELAS");
 
-						 if (parcelas.compareTo(BigDecimal.ONE) <= 0) {
-						     vlrBaixa = resultSetCartao.getBigDecimal("VALOR");
-						 } else {
-						     vlrBaixa = finVO.asBigDecimal("VLRDESDOB");
-						 }
-						
+						BigDecimal vlrBaixa = BigDecimalUtil.ZERO_VALUE;
+
+						BigDecimal parcelas = resultSetCartao.getBigDecimal("PARCELAS");
+
+						if (parcelas.compareTo(BigDecimal.ONE) <= 0) {
+							vlrBaixa = resultSetCartao.getBigDecimal("VALOR");
+						} else {
+							vlrBaixa = finVO.asBigDecimal("VLRDESDOB");
+						}
+
 						System.out.println("*********************");
 						System.out.println("*Vai ser enviado para baixa : " + vlrBaixa.toString());
 						System.out.println("*********************");
 
-						Boolean baixou = baixarFinanceiro(dataBaixa, finVO, usuarioLogado, vlrBaixa);
+						Boolean baixou = false;
+
+						if (qtdTitulosABaixar <= parcelas.intValue()) {
+
+							baixou = baixarFinanceiro(dataBaixa, finVO, usuarioLogado, vlrBaixa);
+
+						}
 
 						System.out.println("*********************");
 						System.out.println("* Achou um resultado dentro de  nativeSql =  Busca dados do TEF-Registro : "
@@ -162,18 +191,15 @@ public class BaixaController {
 
 	}
 
-	private boolean baixarFinanceiro(final Timestamp dhBaixa, final DynamicVO finVO, BigDecimal usuarioLogado, BigDecimal vlrBaixa)
-			throws Exception {
+	private boolean baixarFinanceiro(final Timestamp dhBaixa, final DynamicVO finVO, BigDecimal usuarioLogado,
+			BigDecimal vlrBaixa) throws Exception {
 		/* LANÇAMENTO - 1 = CREDITO, 2 = DEBITO */
 
 		final boolean[] baixadoRet = { false };
 
 		try {
 
-	
 			System.out.println("* Entrou para baixar em baixarFinanceiro() *");
-
-
 
 			if (usuarioLogado.compareTo(new BigDecimal(0)) == 0) {
 				// Usuário criado para baixa GetNet
@@ -193,16 +219,11 @@ public class BaixaController {
 
 			final NativeSql nativeSql = new NativeSql(jdbcWrapper);
 
-			nativeSql.appendSql("select d.CODCTABCOINTDEB,\r\n" 
-			        + "       C1.CODBCO    AS      CODBCOODEB,\r\n"
-					+ "       d.CODCTABCOINTCRED,\r\n" 
-			        + "       C2.CODBCO    AS      CODBCOODEB \r\n"
-					+ "  From AD_GTNPAR d \r\n" 
-			        + " INNER JOIN TSICTA C1 \r\n"
-					+ "    ON C1.CODCTABCOINT = D.CODCTABCOINTDEB \r\n" 
-			        + " INNER JOIN TSICTA C2 \r\n"
-					+ "    ON C2.CODCTABCOINT = D.CODCTABCOINTCRED \r\n" 
-			        + " where d.NUPAR = 1 \r\n" + "");
+			nativeSql.appendSql("select d.CODCTABCOINTDEB,\r\n" + "       C1.CODBCO    AS      CODBCOODEB,\r\n"
+					+ "       d.CODCTABCOINTCRED,\r\n" + "       C2.CODBCO    AS      CODBCOODEB \r\n"
+					+ "  From AD_GTNPAR d \r\n" + " INNER JOIN TSICTA C1 \r\n"
+					+ "    ON C1.CODCTABCOINT = D.CODCTABCOINTDEB \r\n" + " INNER JOIN TSICTA C2 \r\n"
+					+ "    ON C2.CODCTABCOINT = D.CODCTABCOINTCRED \r\n" + " where d.NUPAR = 1 \r\n" + "");
 
 			final ResultSet resultSet = nativeSql.executeQuery();
 
@@ -225,18 +246,16 @@ public class BaixaController {
 				}
 
 			}
-			BigDecimal vlrDesconto  = BigDecimalUtil.ZERO_VALUE;
-			
-			if(finVO.asBigDecimal("VLRDESC").compareTo(new BigDecimal(0)) == 0) {
-				
-				vlrDesconto	= finVO.asBigDecimal("VLRDESDOB").subtract(vlrBaixa);
-				
+			BigDecimal vlrDesconto = BigDecimalUtil.ZERO_VALUE;
+
+			if (finVO.asBigDecimal("VLRDESC").compareTo(new BigDecimal(0)) == 0) {
+
+				vlrDesconto = finVO.asBigDecimal("VLRDESDOB").subtract(vlrBaixa);
+
 			} else {
 				vlrDesconto = finVO.asBigDecimal("VLRDESC");
-				
+
 			}
-			
-		
 
 			dadosBaixa.getValoresBaixa().setVlrJuros(0);
 			dadosBaixa.getValoresBaixa().setVlrMulta(0);
@@ -254,20 +273,19 @@ public class BaixaController {
 			dadosBaixa.setImprimeRecibo(false);
 			dadosBaixa.setIncluirMovimentoBancario(true);
 			dadosBaixa.getValoresBaixa().setVlrDesconto(vlrDesconto.doubleValue());
-		
+
 			dadosBaixa.setOrigem("F");
 			dadosBaixa.setRecdesp(1);
 			dadosBaixa.setVlrDesdobNegociacao(finVO.asDouble("VLRDESDOB"));
-			 dadosBaixa.getValoresBaixa().setVlrTotal(BaixaHelper.calculaValorBaixa(dadosBaixa, finVO.asDouble("VLRDESDOB"), 
-			    		dadosBaixa.getImpostos().getOutrosImpostos(), finVO.asInt("CODMOEDA")));  
-			 
-			 
-				System.out.println("??????????????????????????????????????????????????????????????????????????");
-				System.out.println("* Dados da Baixa depois do valor da baixa atualizado*");
-				System.out.println("*Baixando Nro Único : *" + finVO.asBigDecimal("NUFIN"));
-				System.out.println( dadosBaixa.toString());
-				System.out.println("????????????????????????????????????????????????????????????????????????????");
-			
+			dadosBaixa.getValoresBaixa()
+					.setVlrTotal(BaixaHelper.calculaValorBaixa(dadosBaixa, finVO.asDouble("VLRDESDOB"),
+							dadosBaixa.getImpostos().getOutrosImpostos(), finVO.asInt("CODMOEDA")));
+
+			System.out.println("??????????????????????????????????????????????????????????????????????????");
+			System.out.println("* Dados da Baixa depois do valor da baixa atualizado*");
+			System.out.println("*Baixando Nro Único : *" + finVO.asBigDecimal("NUFIN"));
+			System.out.println(dadosBaixa.toString());
+			System.out.println("????????????????????????????????????????????????????????????????????????????");
 
 //			dadosBaixa.getValoresBaixa()
 //					.setVlrTotal(BaixaHelper.calculaValorBaixa(dadosBaixa, finVO.asDouble("VLRDESDOB"),
@@ -326,21 +344,67 @@ public class BaixaController {
 
 			// 2867,2992,2662,2996, 2940, 2971
 
-			nativeSql.appendSql("SELECT l.NURENEG, l.LINKID, l.NUFIN\r\n"
-					+ "					          FROM AD_GETNETPAYMENTLINK l			 WHERE (EXISTS (SELECT 1\r\n"
-					+ "					                          FROM tgffin f\r\n"
-					+ "							                 WHERE f.NURENEG = l.NURENEG\r\n"
-					+ "					                           AND f.DHBAIXA IS NULL\r\n" + "\r\n"
-					+ "							                   AND f.RECDESP <> 0)\r\n"
-					+ "							                   OR EXISTS\r\n"
-					+ "							        (SELECT 1            FROM tgffin ff\r\n"
-					+ "							         WHERE ff.NUFIN = l.NUFIN\r\n"
-					+ "							           AND ff.RECDESP = 1\r\n"
-					+ "							           AND ff.DHBAIXA IS NULL) 			            )\r\n"
-					//+ " AND L.LINKID = 'RjPwm7izS'\r\n"
-					+ "							   AND EXISTS (SELECT 1			          FROM AD_GTNPMTORD N\r\n"
-					+ "							         WHERE N.LINKID = l.LINKID\r\n"
-					+ "							           AND N.PMT_STATUS = 'SUCCESSFUL')");
+			nativeSql.appendSql("SELECT *\r\n"
+					+ "FROM (SELECT l.NURENEG,\r\n"
+					+ "             l.LINKID,\r\n"
+					+ "             l.NUFIN,\r\n"
+					+ "             CASE\r\n"
+					+ "                 WHEN L.NURENEG IS NOT NULL THEN (SELECT SUM(F.VLRDESDOB)\r\n"
+					+ "                                                  FROM TGFFIN F\r\n"
+					+ "                                                  WHERE F.NURENEG = L.NURENEG AND F.RECDESP = 1)\r\n"
+					+ "                 ELSE (SELECT SUM(F.VLRDESDOB) FROM TGFFIN F WHERE F.NUFIN = L.NUFIN AND F.RECDESP = 1) END AS VLRDESDOB\r\n"
+					+ "      FROM AD_GETNETPAYMENTLINK l\r\n"
+					+ "      WHERE (EXISTS (SELECT 1\r\n"
+					+ "                     FROM tgffin f\r\n"
+					+ "                     WHERE f.NURENEG = l.NURENEG\r\n"
+					+ "                       AND f.DHBAIXA IS NULL\r\n"
+					+ "                       AND f.RECDESP <> 0)\r\n"
+					+ "          OR EXISTS\r\n"
+					+ "                 (SELECT 1\r\n"
+					+ "                  FROM tgffin ff\r\n"
+					+ "                  WHERE ff.NUFIN = l.NUFIN\r\n"
+					+ "                    AND ff.RECDESP = 1\r\n"
+					+ "                    AND ff.DHBAIXA IS NULL)\r\n"
+					+ "          )\r\n"
+					+ "        AND EXISTS (SELECT 1\r\n"
+					+ "                    FROM AD_GTNPMTORD N\r\n"
+					+ "                    WHERE N.LINKID = l.LINKID\r\n"
+					+ "                      AND N.PMT_STATUS = 'SUCCESSFUL'\r\n"
+					+ "                      AND EXISTS (SELECT 1\r\n"
+					+ "                                  FROM AD_GTNLINK DDD\r\n"
+					+ "                                  WHERE DDD.LINKID = L.LINKID\r\n"
+					+ "                                    AND DDD.DHBAIXA IS NULL))\r\n"
+					+ "--AND L.LINKID = 'fZ31YET4wM'\r\n"
+					+ "      union all\r\n"
+					+ "      select  FINDEST.nureneg, l.LINKID, null NUFIN, sum(FINDEST.VLRDESDOB) VLRDESDOB\r\n"
+					+ "      FROM AD_GETNETPAYMENTLINK l\r\n"
+					+ "               inner join tgffin finori on finori.NUFIN = l.NUFIN,\r\n"
+					+ "           ad_rensimtit rt,\r\n"
+					+ "           ad_rensim rs,\r\n"
+					+ "           ad_rensimfin rf,\r\n"
+					+ "           ad_planpagto pp,\r\n"
+					+ "           tgffin findest\r\n"
+					+ "\r\n"
+					+ "      where finori.RECDESP = 0\r\n"
+					+ "        and finori.NUFIN = rt.NUFIN\r\n"
+					+ "        and rt.NURENSIM = rs.NURENSIM\r\n"
+					+ "        and rs.NURENSIM = rf.NURENSIM\r\n"
+					+ "        and rs.CODRENTIP = pp.CODRENTIP\r\n"
+					+ "        and pp.CODTIPTITPARC = 8\r\n"
+					+ "        and rf.NUFIN = findest.NUFIN\r\n"
+					+ "        and finori.NURENEG = findest.NURENEG\r\n"
+					+ "        and findest.RECDESP = 1\r\n"
+					+ "        and findest.DHBAIXA is null\r\n"
+					+ "        AND EXISTS (SELECT 1\r\n"
+					+ "                    FROM AD_GTNPMTORD N\r\n"
+					+ "                    WHERE N.LINKID = l.LINKID\r\n"
+					+ "                      AND N.PMT_STATUS = 'SUCCESSFUL'\r\n"
+					+ "                      AND EXISTS (SELECT 1\r\n"
+					+ "                                  FROM AD_GTNLINK DDD\r\n"
+					+ "                                  WHERE DDD.LINKID = L.LINKID\r\n"
+					+ "                                    AND DDD.DHBAIXA IS NULL))\r\n"
+					+ "      group by FINDEST.nureneg,  l.LINKID\r\n"
+					+ "      ) GG");
 
 			final ResultSet resultSet = nativeSql.executeQuery();
 			while (resultSet.next()) {
@@ -400,7 +464,6 @@ public class BaixaController {
 			tefVo.setProperty("REDE", new BigDecimal(4));
 			tefVo.setProperty("VLRTAXA", BigDecimalUtil.ZERO_VALUE);
 			tefVo.setProperty("DESDOBRAMENTO", vlrTansacao);
-			
 
 			dwTef.createEntity("TEF", (EntityVO) tefVo);
 
