@@ -12,7 +12,7 @@
 	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/jdom.jar"/>
 	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/jdom-jaxen-jboss-4.10b157.jar"/>
 	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mgefin-model-4.10b157.jar"/>
-	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mge-modelcore-4.10b157.jar"/>
+	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mge-modelcore-4.10b157.jar" sourcepath="/api_outros"/>
 	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/mge-modulemgr-4.10b157.jar"/>
 	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/sankhya-commons-4.10b157.jar"/>
 	<classpathentry kind="lib" path="D:/Sankhya/Java/Biblioteca - SKW/SankhyaW-extensions.jar"/>

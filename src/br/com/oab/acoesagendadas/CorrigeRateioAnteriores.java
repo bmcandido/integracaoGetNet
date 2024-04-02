@@ -29,13 +29,14 @@ public class CorrigeRateioAnteriores implements ScheduledAction {
 			jdbc.openSession();
 
 			NativeSql sqlReturn = new NativeSql(jdbc);
-			sqlReturn.appendSql("SELECT D.NURENEG\r\n" 
-			        + "FROM AD_RENSIM D\r\n" 
-					+ "WHERE D.NURENEG IS NOT NULL\r\n"
-					+ "  AND EXISTS (SELECT 1 FROM TGFFIN F WHERE F.NURENEG = D.NURENEG)\r\n"
-					+ "  AND EXISTS (SELECT 1 FROM TGFREN N WHERE N.NURENEG = D.NURENEG)\r\n" 
-					+ "GROUP BY D.NURENEG\r\n"
-					+ "ORDER BY 1 ASC");
+			sqlReturn.appendSql("SELECT NURENEG\r\n"
+					+ "           FROM AD_RENSIM D\r\n"
+					+ "     WHERE D.NURENEG IS NOT NULL\r\n"
+					+ "       AND EXISTS (SELECT 1 FROM TGFFIN F WHERE F.NURENEG = D.NURENEG)\r\n"
+					+ "       AND EXISTS (SELECT 1 FROM TGFREN N WHERE N.NURENEG = D.NURENEG)\r\n"
+					+ "       AND CONVERT(DATE,D.DHRENEG,103) <= '2023-12-31'\r\n"
+					+ "     GROUP BY D.NURENEG\r\n"
+					+ "     ORDER BY 1 ASC");
 
 			ResultSet resultSet = sqlReturn.executeQuery();
 

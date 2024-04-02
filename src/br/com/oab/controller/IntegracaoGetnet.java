@@ -287,7 +287,7 @@ public class IntegracaoGetnet {
 				public void doWithTx() throws Exception {
 
 					int pageNumber = 1;
-					int maxPage = 50;
+					int maxPage = 150;
 
 					do {
 
